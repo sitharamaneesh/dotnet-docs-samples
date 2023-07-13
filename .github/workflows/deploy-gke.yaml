@@ -53,11 +53,11 @@ jobs:
     #
     # Build the .NET code
     #
-    - name: Build solution
-      run: |-
-        dotnet publish applications/clouddemo/netcore/CloudDemo.MvcCore.sln \
-            --configuration Release \
-            --framework net6.0
+    #- name: Build solution
+     # run: |-
+    #    dotnet publish applications/clouddemo/netcore/CloudDemo.MvcCore.sln \
+    #        --configuration Release \
+    #        --framework net6.0
 
     #
     # Build the Docker image and push it to Artifact Registry
