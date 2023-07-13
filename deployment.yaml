@@ -83,4 +83,4 @@ spec:
           requests:
             memory: 256Mi
       imagePullSecrets:
-      - name: regcred
+      - name: gcr-access-token
