@@ -63,8 +63,6 @@ spec:
       containers:
       - name: clouddemo-netcore
         image: awesome-mvc/latest
-      imagePullSecrets:
-      - name: regcred
         ports:
           - containerPort: 8080
         livenessProbe:      # Used by deployment controller
@@ -84,3 +82,5 @@ spec:
             memory: 1024Mi
           requests:
             memory: 256Mi
+      imagePullSecrets:
+      - name: regcred
