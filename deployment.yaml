@@ -64,16 +64,16 @@ spec:
       - name: clouddemo-netcore
         image: awesome-mvc
         ports:
-          - containerPort: 8080
+          - containerPort: 80
         livenessProbe:      # Used by deployment controller
           httpGet:
-            path: /health
-            port: 8080
+            path: /app
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:     # Used by Ingress/GCLB
           httpGet:
-            path: /health
+            path: /app
             port: 8080
           initialDelaySeconds: 3
           periodSeconds: 5
