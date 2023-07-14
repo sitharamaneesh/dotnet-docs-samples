@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
       - name: clouddemo-netcore
-        image: awesome-mvc:latest
+        image: awesome-mvc
         ports:
           - containerPort: 8080
         livenessProbe:      # Used by deployment controller
