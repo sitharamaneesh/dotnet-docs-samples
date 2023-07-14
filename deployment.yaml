@@ -31,7 +31,7 @@ spec:
     name: http
   selector:
     app: clouddemo-netcore
-  type: NodePort
+  type: LoadBalancer
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -67,13 +67,13 @@ spec:
           - containerPort: 80
         livenessProbe:      # Used by deployment controller
           httpGet:
-            path: /app
+            path: /
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:     # Used by Ingress/GCLB
           httpGet:
-            path: /app
+            path: /
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 5
