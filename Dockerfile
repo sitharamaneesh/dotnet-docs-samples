@@ -1,17 +1,19 @@
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore --use-current-runtime  
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
 
 
-# Take a base image from the public Docker Hub repositories
-FROM  mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
-# Navigate to the “/app” folder (create if not exists)
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-# Copy csproj and download the dependencies listed in that file
-COPY *.csproj ./
-RUN dotnet restore
-# Copy all files in the project folder
-COPY . ./
-RUN dotnet publish -c Release -o out
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "awesomeMVC.dll"]
+COPY --from=build /app .
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
