@@ -15,7 +15,7 @@ env:
   REPOSITORY:  my-repository
   REPOSITORY_REGION: us-east1
 
-  IMAGE: awesome-mvc/latest
+  IMAGE: awesome-mvc:latest
 
 jobs:
   build:
