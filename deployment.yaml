@@ -26,12 +26,32 @@ metadata:
 spec:
   ports:
   - port: 80
+<<<<<<< HEAD
     targetPort: 5000
     protocol: TCP
     name: http
   selector:
     app: clouddemo-netcore
   type: Loadbalancer
+=======
+    targetPort: 8080
+    name: http
+  selector:
+    app: clouddemo-netcore
+  type: LoadBalancer
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clouddemo-netcore
+spec:
+  defaultBackend:
+    service:
+      name: clouddemo-netcore
+      port:
+        number: 80
+>>>>>>> 84111cc808c89ce0e06336aa43cb286979962c48
 
 ---
 apiVersion: apps/v1
@@ -52,17 +72,29 @@ spec:
       - name: clouddemo-netcore
         image: awesome-mvc
         ports:
+<<<<<<< HEAD
           - containerPort: 5000
         livenessProbe:      # Used by deployment controller
           httpGet:
             path: /
             port: 5000
+=======
+          - containerPort: 80
+        livenessProbe:      # Used by deployment controller
+          httpGet:
+            path: /
+            port: 80
+>>>>>>> 84111cc808c89ce0e06336aa43cb286979962c48
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:     # Used by Ingress/GCLB
           httpGet:
             path: /
+<<<<<<< HEAD
             port: 5000
+=======
+            port: 80
+>>>>>>> 84111cc808c89ce0e06336aa43cb286979962c48
           initialDelaySeconds: 3
           periodSeconds: 5
         resources:
@@ -70,3 +102,8 @@ spec:
             memory: 1024Mi
           requests:
             memory: 256Mi
+<<<<<<< HEAD
+=======
+      imagePullSecrets:
+      - name: gcr-access-token
+>>>>>>> 84111cc808c89ce0e06336aa43cb286979962c48
