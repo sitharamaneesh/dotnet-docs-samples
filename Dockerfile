@@ -1,19 +1,27 @@
-# Learn about building .NET container images:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /source
+# First stage: Build the application
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+WORKDIR /app
 
-# copy csproj and restore as distinct layers
-COPY aspnetapp/*.csproj .
-RUN dotnet restore --use-current-runtime  
+# Copy the .csproj and restore any dependencies
+COPY *.csproj ./
+RUN dotnet restore
 
-# copy everything else and build app
-COPY aspnetapp/. .
-RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
+# Copy the rest of the files and build the project
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-
-# final stage/image
+# Second stage: Setup the runtime
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-COPY --from=build /app .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+
+# Copy files from the build stage
+COPY --from=build-env /app/out .
+
+# Set the environment
+ENV ASPNETCORE_URLS=http://*:5000
+
+# Expose the port
+EXPOSE 5000
+
+# Run the application
+ENTRYPOINT ["dotnet", "HelloWorldApp.dll"]
