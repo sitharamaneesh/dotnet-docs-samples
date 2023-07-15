@@ -6,14 +6,14 @@ on:
       - master
 
 env:
-  PROJECT_ID: test-392414
-  PROJECT_NUMBER: 691947957481
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  PROJECT_NUMBER: ${{ secrets.PROJECT_NUMBER }}
 
-  CLUSTER: my-gke-cluster
-  CLUSTER_ZONE: us-east1-b
+  CLUSTER: ${{ secrets.CLUSTER }}
+  CLUSTER_ZONE: ${{ secrets.CLUSTER_ZONE }}
 
-  REPOSITORY:  my-repository
-  REPOSITORY_REGION: us-east1
+  REPOSITORY:  ${{ secrets.REPOSITORY }}
+  REPOSITORY_REGION:  ${{ secrets.REPOSITORY_REGION }}
 
   IMAGE: awesome-mvc
 
@@ -37,7 +37,7 @@ jobs:
       with:
         create_credentials_file: true
         token_format: access_token
-        workload_identity_provider:  projects/691947957481/locations/global/workloadIdentityPools/github-actions/providers/github-actions-oidc
+        workload_identity_provider:  projects/${{ env.PROJECT_ID }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions-oidc
         service_account: github-actions-workflow@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
 
     - name: Connect to Artifact Registry
