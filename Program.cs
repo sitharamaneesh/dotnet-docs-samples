@@ -19,15 +19,13 @@ app.MapGet("/", async context =>
 {
     var aspnetVersion = Assembly.GetEntryAssembly()?.GetCustomAttribute<System.Runtime.Versioning.TargetFrameworkAttribute>()?.FrameworkName;
     var serverTime = DateTime.UtcNow;
-
+    string osName = Environment.OSVersion.Platform.ToString();
+    string osVersion = Environment.OSVersion.Version.ToString();
     var responseMessage = $"<div style='text-align:center;'>" +
                           $"<h1>Hello, World!</h1>" +
                           $"<p>ASP.NET Version: {aspnetVersion}</p>" +
                           $"<p>Server Time: {serverTime}</p>" +
-                          $"<tr>"+
-                          $"<td>.NET version</td>"+
-                          $"<td>@RuntimeInformation.FrameworkDescription</td>"+
-                          $"</tr>"+
+                          $"<p>Os details: {osName} {osversion}</p>" +
                           $"</div>";
 
     context.Response.ContentType = "text/html";
