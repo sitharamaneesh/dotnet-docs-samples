@@ -24,6 +24,10 @@ app.MapGet("/", async context =>
                           $"<h1>Hello, World!</h1>" +
                           $"<p>ASP.NET Version: {aspnetVersion}</p>" +
                           $"<p>Server Time: {serverTime}</p>" +
+                          $"<tr>"+
+                          $"<td>.NET version</td>"+
+                          $"<td>@RuntimeInformation.FrameworkDescription</td>"+
+                          $"</tr>"+
                           $"</div>";
 
     context.Response.ContentType = "text/html";
