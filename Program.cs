@@ -22,7 +22,6 @@ app.MapGet("/", async context =>
     string osName = Environment.OSVersion.Platform.ToString();
     string osVersion = Environment.OSVersion.Version.ToString();
     var responseMessage = $"<div style='text-align:center;'>" +
-                          $"<style>body { background-image: url('https://www.pexels.com/search/white%20background/');background-repeat: no-repeat;background-attachment: fixed;background-size: cover;}</style>" +
                           $"<h1>Hello, World!</h1>" +
                           $"<p>ASP.NET Version: {aspnetVersion}</p>" +
                           $"<p>Server Time: {serverTime}</p>" +
