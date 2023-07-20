@@ -70,7 +70,7 @@ jobs:
       run: echo "IMAGE_TAG=${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:$GITHUB_SHA" >> $GITHUB_ENV
 
     - name: Lock image version in deployment.yaml
-      run: sed -i 's|awesome-mvc|${{ env.IMAGE_TAG }}|g' deployment.yaml
+      run: sed -i 's|awesome-mvc|${{ env.IMAGE_TAG }}|g'  webapp-helm-chart/templates/deployment.yaml
 
     - name: Build Docker image
       run: docker build --tag "${{ env.IMAGE_TAG }}" .
