@@ -44,8 +44,8 @@ jobs:
       run:  |
             sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo -y
             sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-            sudo usermod -aG docker $USER
             sudo systemctl start docker && sudo systemctl enable docker && sudo systemctl status docker
+            sudo chmod 666 /var/run/docker.sock
 
             
 
@@ -77,10 +77,10 @@ jobs:
       run: sed -i 's|awesome-mvc|${{ env.IMAGE_TAG }}|g'  webapp-helm-chart/templates/deployment.yaml
 
     - name: Build Docker image
-      run: sudo docker build --tag "${{ env.IMAGE_TAG }}" .
+      run: docker build --tag "${{ env.IMAGE_TAG }}" .
 
     - name: Publish Docker image to Google Artifact Registry
-      run: sudo docker push "${{ env.IMAGE_TAG }}"
+      run:  docker push "${{ env.IMAGE_TAG }}"
     #- name:  Auth to pull docker image
     #  run: gcloud auth configure-docker us-east1-docker.pkg.dev
     - name: Connect to GKE
