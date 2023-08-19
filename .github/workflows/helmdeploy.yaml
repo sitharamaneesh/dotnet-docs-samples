@@ -40,6 +40,12 @@ jobs:
         workload_identity_provider:  projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
         service_account: github-actions-workflow@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
 
+    - name: Install Docker
+      run:  |
+            sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo -y
+            sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+            
+
     - name: Connect to Artifact Registry
       run: |-
         echo ${{ steps.auth.outputs.access_token }} | docker login -u oauth2accesstoken --password-stdin https://${{ env.REPOSITORY_REGION }}-docker.pkg.dev
